@@ -167,14 +167,16 @@ def find_infected_files(directory_path, extension=".encrypted"):
         find_infected_files('root', '.encrypted') should return:
         ['root/virus.encrypted', 'root/subdir/data.encrypted']
     """
-    # TODO: Implement this function
-    # Hints:
-    # 1. Base case: If it's a file, check if it has the extension
-    # 2. Recursive case: If it's a directory, check all items inside
-    # 3. You'll need to build and return a list of matching file paths
-    # 4. Use os.path.join() to create full paths
-    
-    pass
+    # Base case: a file matches if its extension matches
+    if os.path.isfile(directory_path):
+        if directory_path.endswith(extension):
+            return [directory_path]
+        return []
+
+    infected = []
+    for item in os.listdir(directory_path):
+        infected += find_infected_files(os.path.join(directory_path, item), extension)
+    return infected
 
 
 # ============================================================================
@@ -195,12 +197,12 @@ if __name__ == "__main__":
     print("Total files (breeched files):", count_files("breach_data")) # ???
 
     ## 3. Uncomment to run tests for find_infected_files function
-    # print("Total Infected Files (Test Case 1):", len(find_infected_files("test_cases/case1_flat"))) # 0
-    # print("Total Infected Files (Test Case 1):", len(find_infected_files("test_cases/case2_nested"))) # 0
-    # print("Total Infected Files (Test Case 3):", len(find_infected_files("test_cases/case3_infected"))) # 3
+    print("Total Infected Files (Test Case 1):", len(find_infected_files("test_cases/case1_flat"))) # 0
+    print("Total Infected Files (Test Case 1):", len(find_infected_files("test_cases/case2_nested"))) # 0
+    print("Total Infected Files (Test Case 3):", len(find_infected_files("test_cases/case3_infected"))) # 3
 
     ## 4. Uncomment to run find_infected breached files
-    # print("Total Infected Files (breached files):", len(find_infected_files("breach_data"))) # ???
+    print("Total Infected Files (breached files):", len(find_infected_files("breach_data"))) # ???
 
     ## 5. Determine how many files were corrupted by department (Finance, HR, and Sales)
     
