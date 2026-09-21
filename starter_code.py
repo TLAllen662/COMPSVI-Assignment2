@@ -131,14 +131,14 @@ def count_files(directory_path):
         
         count_files('root') should return 3
     """
-    # TODO: Implement this function
-    # Hints:
-    # 1. What is the base case? (What if directory_path is a file, not a directory?)
-    # 2. How do you list items in a directory? (Check Resource 3)
-    # 3. For each item, is it a file or directory? Recursively handle directories.
-    # 4. How do you combine the results?
-    
-    pass
+    # Base case: a file counts as 1
+    if os.path.isfile(directory_path):
+        return 1
+
+    total = 0
+    for item in os.listdir(directory_path):
+        total += count_files(os.path.join(directory_path, item))
+    return total
 
 
 # ============================================================================
@@ -187,12 +187,12 @@ if __name__ == "__main__":
     print("Complete the functions above, then run this file to test your work.\n")
     
     ## 1. Uncomment to run tests for count_files functions
-    # print("Total files (Test Case 1):", count_files("test_cases/case1_flat")) # 5
-    # print("Total files (Test Case 2):", count_files("test_cases/case2_nested")) # 4
-    # print("Total files (Test Case 3):", count_files("test_cases/case3_infected")) # 5
+    print("Total files (Test Case 1):", count_files("test_cases/case1_flat")) # 5
+    print("Total files (Test Case 2):", count_files("test_cases/case2_nested")) # 4
+    print("Total files (Test Case 3):", count_files("test_cases/case3_infected")) # 5
 
     ## 2. Uncomment to run count_files for breached files
-    # print("Total files (breeched files):", count_files("breach_data")) # ???
+    print("Total files (breeched files):", count_files("breach_data")) # ???
 
     ## 3. Uncomment to run tests for find_infected_files function
     # print("Total Infected Files (Test Case 1):", len(find_infected_files("test_cases/case1_flat"))) # 0
